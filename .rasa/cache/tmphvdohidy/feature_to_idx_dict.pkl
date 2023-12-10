@@ -1,0 +1,1 @@
+{"json://{\"py/tuple\": [1, \"BOS\"]}": {"True": 0}, "json://{\"py/tuple\": [1, \"EOS\"]}": {"True": 1}, "json://{\"py/tuple\": [1, \"digit\"]}": {"False": 2}, "json://{\"py/tuple\": [1, \"low\"]}": {"True": 3}, "json://{\"py/tuple\": [1, \"title\"]}": {"False": 4}, "json://{\"py/tuple\": [1, \"upper\"]}": {"False": 5}}

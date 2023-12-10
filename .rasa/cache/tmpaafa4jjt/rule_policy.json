@@ -1,0 +1,22 @@
+{
+  "lookup": {
+    "rules": {
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \".*\"}}]": "action_classify_intent",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \".*\"}}, {\"prev_action\": {\"action_name\": \"action_classify_intent\"}, \"user\": {\"intent\": \".*\"}}]": "action_respond_general_info",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \".*\"}}, {\"prev_action\": {\"action_name\": \"action_classify_intent\"}, \"user\": {\"intent\": \".*\"}}, {\"prev_action\": {\"action_name\": \"action_respond_general_info\"}, \"user\": {\"intent\": \".*\"}}]": "action_handle_bank_transfer",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \".*\"}}, {\"prev_action\": {\"action_name\": \"action_classify_intent\"}, \"user\": {\"intent\": \".*\"}}, {\"prev_action\": {\"action_name\": \"action_respond_general_info\"}, \"user\": {\"intent\": \".*\"}}, {\"prev_action\": {\"action_name\": \"action_handle_bank_transfer\"}, \"user\": {\"intent\": \".*\"}}]": "action_listen"
+    },
+    "rule_only_slots": [],
+    "rule_only_loops": [],
+    "rules_for_loop_unhappy_path": {},
+    "rules_not_in_stories": [
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \".*\"}}, {\"prev_action\": {\"action_name\": \"action_classify_intent\"}, \"user\": {\"intent\": \".*\"}}]",
+      "predicting default action with intent session_start",
+      "predicting default action with intent back",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \".*\"}}, {\"prev_action\": {\"action_name\": \"action_classify_intent\"}, \"user\": {\"intent\": \".*\"}}, {\"prev_action\": {\"action_name\": \"action_respond_general_info\"}, \"user\": {\"intent\": \".*\"}}]",
+      "predicting default action with intent restart",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \".*\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \".*\"}}, {\"prev_action\": {\"action_name\": \"action_classify_intent\"}, \"user\": {\"intent\": \".*\"}}, {\"prev_action\": {\"action_name\": \"action_respond_general_info\"}, \"user\": {\"intent\": \".*\"}}, {\"prev_action\": {\"action_name\": \"action_handle_bank_transfer\"}, \"user\": {\"intent\": \".*\"}}]"
+    ]
+  }
+}

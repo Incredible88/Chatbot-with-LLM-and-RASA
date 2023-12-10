@@ -1,0 +1,28 @@
+[
+  {
+    "tag_name": "entity",
+    "ids_to_tags": {
+      "1": "B-amount",
+      "2": "I-amount",
+      "3": "L-amount",
+      "4": "U-amount",
+      "5": "B-recipient",
+      "6": "I-recipient",
+      "7": "L-recipient",
+      "8": "U-recipient",
+      "0": "O"
+    },
+    "tags_to_ids": {
+      "B-amount": 1,
+      "I-amount": 2,
+      "L-amount": 3,
+      "U-amount": 4,
+      "B-recipient": 5,
+      "I-recipient": 6,
+      "L-recipient": 7,
+      "U-recipient": 8,
+      "O": 0
+    },
+    "num_tags": 9
+  }
+]

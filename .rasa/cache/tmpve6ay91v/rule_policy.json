@@ -1,0 +1,40 @@
+{
+  "lookup": {
+    "rules": {
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"other\"}}]": "action_classify_intent",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"other\"}}, {\"prev_action\": {\"action_name\": \"action_classify_intent\"}, \"user\": {\"intent\": \"other\"}}]": "action_listen",
+      "[{\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"transfer_form\"}, \"slots\": {\"transfer_confirmation\": [1.0]}}]": "action_handle_bank_transfer",
+      "[{\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"transfer_form\"}, \"slots\": {\"transfer_confirmation\": [1.0]}}, {\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"action_handle_bank_transfer\"}, \"slots\": {\"transfer_confirmation\": [1.0]}}]": "utter_transfer_cancelled",
+      "[{\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"transfer_form\"}, \"slots\": {\"transfer_confirmation\": [1.0]}}, {\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"action_handle_bank_transfer\"}, \"slots\": {\"transfer_confirmation\": [1.0]}}, {\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"utter_transfer_cancelled\"}, \"slots\": {\"transfer_confirmation\": [1.0]}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"general_info\"}}]": "action_respond_general_info",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"general_info\"}}, {\"prev_action\": {\"action_name\": \"action_respond_general_info\"}, \"user\": {\"intent\": \"general_info\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"bank_transfer\"}}]": "action_confirm_transfer",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"bank_transfer\"}}, {\"active_loop\": {\"name\": \"transfer_form\"}, \"prev_action\": {\"action_name\": \"action_confirm_transfer\"}, \"user\": {\"intent\": \"bank_transfer\"}}]": "action_listen"
+    },
+    "rule_only_slots": [
+      "transfer_confirmation"
+    ],
+    "rule_only_loops": [
+      "transfer_form"
+    ],
+    "rules_for_loop_unhappy_path": {
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}}, {\"active_loop\": {\"name\": \"transfer_form\"}, \"prev_action\": {\"action_name\": \"action_confirm_transfer\"}, \"user\": {\"intent\": \"bank_transfer\"}}]": "do_not_predict_loop_action"
+    },
+    "rules_not_in_stories": [
+      "[{\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"transfer_form\"}, \"slots\": {\"transfer_confirmation\": [1.0]}}]",
+      "predicting default action with intent restart",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"bank_transfer\"}}, {\"active_loop\": {\"name\": \"transfer_form\"}, \"prev_action\": {\"action_name\": \"action_confirm_transfer\"}, \"user\": {\"intent\": \"bank_transfer\"}}]",
+      "handling active loops and forms - transfer_form",
+      "handling active loops and forms - transfer_form - action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"general_info\"}}, {\"prev_action\": {\"action_name\": \"action_respond_general_info\"}, \"user\": {\"intent\": \"general_info\"}}]",
+      "predicting default action with intent session_start",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"general_info\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"other\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"other\"}}, {\"prev_action\": {\"action_name\": \"action_classify_intent\"}, \"user\": {\"intent\": \"other\"}}]",
+      "[{\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"transfer_form\"}, \"slots\": {\"transfer_confirmation\": [1.0]}}, {\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"action_handle_bank_transfer\"}, \"slots\": {\"transfer_confirmation\": [1.0]}}, {\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"utter_transfer_cancelled\"}, \"slots\": {\"transfer_confirmation\": [1.0]}}]",
+      "[{\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"transfer_form\"}, \"slots\": {\"transfer_confirmation\": [1.0]}}, {\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"action_handle_bank_transfer\"}, \"slots\": {\"transfer_confirmation\": [1.0]}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"bank_transfer\"}}]",
+      "predicting default action with intent back"
+    ]
+  }
+}

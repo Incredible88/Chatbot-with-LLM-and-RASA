@@ -1,0 +1,28 @@
+{
+  "lookup": {
+    "rules": {
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"other\"}}]": "action_classify_intent",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"other\"}}, {\"prev_action\": {\"action_name\": \"action_classify_intent\"}, \"user\": {\"intent\": \"other\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"general_info\"}}]": "action_respond_general_info",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"general_info\"}}, {\"prev_action\": {\"action_name\": \"action_respond_general_info\"}, \"user\": {\"intent\": \"general_info\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"bank_transfer\"}}]": "action_handle_bank_transfer",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"bank_transfer\"}}, {\"prev_action\": {\"action_name\": \"action_handle_bank_transfer\"}, \"user\": {\"intent\": \"bank_transfer\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_respond_general_info\"}, \"slots\": {\"predicted_intent\": [1.0]}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_handle_bank_transfer\"}, \"slots\": {\"predicted_intent\": [1.0]}}]": "action_listen"
+    },
+    "rule_only_slots": [],
+    "rule_only_loops": [],
+    "rules_for_loop_unhappy_path": {},
+    "rules_not_in_stories": [
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"other\"}}, {\"prev_action\": {\"action_name\": \"action_classify_intent\"}, \"user\": {\"intent\": \"other\"}}]",
+      "predicting default action with intent back",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"general_info\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"bank_transfer\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"other\"}}]",
+      "predicting default action with intent restart",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"bank_transfer\"}}, {\"prev_action\": {\"action_name\": \"action_handle_bank_transfer\"}, \"user\": {\"intent\": \"bank_transfer\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"general_info\"}}, {\"prev_action\": {\"action_name\": \"action_respond_general_info\"}, \"user\": {\"intent\": \"general_info\"}}]",
+      "predicting default action with intent session_start"
+    ]
+  }
+}

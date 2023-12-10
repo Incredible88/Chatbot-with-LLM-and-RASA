@@ -1,0 +1,39 @@
+{
+    "bank": {
+        "information": {
+        "name": "CCBank",
+        "address": "123 Main Street Cityville CH",
+        "email": "ccbank@bank.ch",
+        "telephone": "+41 321 654 987",
+        "open_time": "9:00-17:00"
+        },
+        "interest rate": {
+            "time_deposits": {
+                "1_year": "3%",
+                "3_year": "4%",
+                "5_year": "5%"
+            },
+            "saving_deposit": "2%"
+        }
+    },
+    "client": {
+        "name": "Bob",
+        "contact": {
+            "email": "bob@example.com",
+            "address": "456 art Street CH",
+            "telephone": "+41 123 456 789"
+        },
+        "accounts": {
+            "account number": "4000 1234 1234 1234",
+            "Save": {
+                "balance": "11000 CHF",
+                "type": "Save Account"
+            },
+            "Pay": {
+                "balance": "2000 CHF",
+                "type": "Pay Account"
+            }
+        }
+
+    }
+}

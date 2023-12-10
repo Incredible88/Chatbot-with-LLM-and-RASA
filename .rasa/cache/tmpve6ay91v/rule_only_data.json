@@ -1,0 +1,8 @@
+{
+  "rule_only_slots": [
+    "transfer_confirmation"
+  ],
+  "rule_only_loops": [
+    "transfer_form"
+  ]
+}

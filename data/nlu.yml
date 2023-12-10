@@ -1,0 +1,69 @@
+version: "3.1"
+
+nlu:
+  - intent: confirm_yes
+    examples: |
+      - /confirm_yes
+  - intent: confirm_no
+    examples: |
+      - /confirm_no
+
+  - intent: other
+    examples: |
+      - What is 1 + 1?
+      - Who funded Apple
+      - What is the weather today
+      - Are you robot
+      - What is your name
+
+  - intent: bank_transfer
+    examples: |
+      - transfer [200](amount) to [Anna](recipient)
+      - I want to transfer [200](amount) to [Alice](recipient)
+      - I want to give [100](amount) to [Alice](recipient)
+      - give [100](amount) to [Clare](recipient)
+      - sent [200](amount) to [Clare](recipient)
+
+
+  - intent: general_info
+    examples: |
+      - Can I make a bank transfer?      
+      - Tell me about your services
+      - I need general information
+      - What is my bank account number
+      - what is my last transaction
+      - what is my last three transactions
+      - what is the interest rate for 1-year deposit
+      - what is the interest rate for 3-year deposit
+      - what is the address for bank
+      - what is the email for bank
+      - what is the working time
+
+  - intent: goodbye
+    examples: |
+      - cu
+      - good by
+      - cee you later
+      - good night
+      - bye
+      - goodbye
+      - have a nice day
+      - see you around
+      - bye bye
+      - see you later
+
+  - intent: greet
+    examples: |
+      - hey
+      - hello
+      - hi
+      - hello there
+      - good morning
+      - good evening
+      - moin
+      - hey there
+      - let's go
+      - hey dude
+      - goodmorning
+      - goodevening
+      - good afternoon

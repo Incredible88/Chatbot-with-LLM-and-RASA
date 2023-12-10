@@ -1,0 +1,9 @@
+{
+  "lookup": {
+    "eJyLrq6NBQAEOAGx": "action_listen",
+    "eJyLrq7VUaguKEoti09MLsnMz7NSqIYw4vMSc1OtFKCcnMziktQ8oNrS4tQioJrMPCC3xEohKTEvO76kKDGvOC21qLY2FgDTbx7O": "action_handle_bank_transfer",
+    "eJyLrq7VUaguKEoti09MLsnMz7NSqIYw4vMSc1OtFKCcnMziktQ8oNrS4tQioJrMPCC3xEohKTEvO76kKDGvOC21qJY4szIS81JyUuNRtRIyORYAv4lBhw==": "action_listen",
+    "eJyLrq7VUaguKEoti09MLsnMz7NSqIYw4vMSc1OtFKCcnMziktQ8oNrS4tQioJrMPCC3xEohPTUvtSgxJz4zLy2/tjYWALSRHlc=": "action_respond_general_info",
+    "eJyLrq7VUaguKEoti09MLsnMz7NSqIYw4vMSc1OtFKCcnMziktQ8oNrS4tQioJrMPCC3xEohPTUvtSgxJz4zLy2/ljijilKLC/LzUuJRtBIwOBYAO3VAsQ==": "action_listen"
+  }
+}

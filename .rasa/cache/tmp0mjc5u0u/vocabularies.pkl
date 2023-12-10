@@ -1,0 +1,1 @@
+{"text": {" ": 0, "a": 4, "n": 18, "y": 28, "t": 24, "h": 10, "i": 14, "g": 8, " a": 1, "an": 5, "ny": 21, "yt": 29, "th": 25, "hi": 11, "in": 15, "ng": 19, "g ": 9, " an": 2, "any": 6, "nyt": 22, "yth": 30, "thi": 26, "hin": 12, "ing": 16, "ng ": 20, " any": 3, "anyt": 7, "nyth": 23, "ythi": 31, "thin": 27, "hing": 13, "ing ": 17}, "response": null, "action_text": null}

@@ -1,0 +1,112 @@
+version: "3.1"
+
+stories:
+  - story: user confirms transfer
+    steps:
+      - intent: bank_transfer
+      - action: action_confirm_transfer
+      - intent: confirm_yes
+      - action: action_handle_bank_transfer
+
+  - story: user cancels transfer
+    steps:
+      - intent: bank_transfer
+      - action: action_confirm_transfer
+      - intent: confirm_no
+      - action: utter_transfer_cancelled
+#stories:
+#  - story: general information query
+#    steps:
+#      - intent: general_info
+#      - action: action_respond_general_info
+#
+#  - story: bank transfer query
+#    steps:
+#      - intent: bank_transfer
+#      - action: action_handle_bank_transfer
+#
+#stories:
+#  - story: classify intent
+#    steps:
+#      - action: action_classify_intent
+#      - or:
+#        - slot_was_set:
+#            - predicted_intent: general_info
+#        - action: action_respond_general_info
+#        - slot_was_set:
+#            - predicted_intent: bank_transfer
+#        - action: action_handle_bank_transfer
+
+#stories:
+#  - story: general info path 1
+#    steps:
+#      - intent: inform1
+#      - action: action_classify_intent
+#      - slot_was_set:
+#          - predicted_intent: general_info
+#      - action: action_respond_general_info
+#
+#  - story: bank transfer path 1
+#    steps:
+#      - intent: inform1
+#      - action: action_classify_intent
+#      - slot_was_set:
+#          - predicted_intent: bank_transfer
+#      - action: action_handle_bank_transfer
+
+#  - story: general info path 2
+#    steps:
+#      - intent: inform2
+#      - action: action_classify_intent
+#      - slot_was_set:
+#          - predicted_intent: general_info
+#      - action: action_respond_general_info
+#
+#
+#  - story: bank transfer path 2
+#    steps:
+#      - intent: inform2
+#      - action: action_classify_intent
+#      - slot_was_set:
+#          - predicted_intent: bank_transfer
+#      - action: action_handle_bank_transfer
+
+
+
+#- story: happy path
+#  steps:
+#  - intent: greet
+#  - action: utter_greet
+#  - intent: mood_great
+#  - action: utter_happy
+#
+#- story: general info
+#  steps:
+#    - intent: general_info
+#    - action: action_respond_general_info
+#
+#- story: bank transfer story
+#  steps:
+#    - intent: bank_transfer
+#    - action: action_handle_bank_transfer
+
+#
+#- story: sad path 1
+#  steps:
+#  - intent: greet
+#  - action: utter_greet
+#  - intent: mood_unhappy
+#  - action: utter_cheer_up
+#  - action: utter_did_that_help
+#  - intent: affirm
+#  - action: utter_happy
+#
+#- story: sad path 2
+#  steps:
+#  - intent: greet
+#  - action: utter_greet
+#  - intent: mood_unhappy
+#  - action: utter_cheer_up
+#  - action: utter_did_that_help
+#  - intent: deny
+#  - action: utter_goodbye

@@ -1,0 +1,6 @@
+{
+  "rule_only_slots": [
+    "predicted_intent"
+  ],
+  "rule_only_loops": []
+}

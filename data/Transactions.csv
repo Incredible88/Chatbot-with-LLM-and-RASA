@@ -1,0 +1,11 @@
+Transaction Number,Date,Amount_change,Balance after,Receiver,Information
+No. 5000010,2024/10/14,-200,"2,000",BCC restaurant,BCC restaurant bills
+No. 5000009,2024/10/13,-60,"2,200",COOP City, COOP City cost
+No. 5000008,2024/10/12,1000,"2,260",Bob,Bank transfer by John
+No. 5000007,2024/10/9,-50,"1,260",SBB,SBB cost
+No. 5000006,2024/10/8,-150,"1,310",Starbucks,Starbucks Coffee cost
+No. 5000005,2024/10/7,-80,"1,460",Grocery store,Local grocery store cost
+No. 5000004,2024/10/6,200,"1,540",Bob,Salary bonus
+No. 5000003,2024/10/5,-25,"1,340",Gym,Gym Membership renewal
+No. 5000002,2024/10/4,500,"1,365",Bob,Monthly Salary Deposit
+No. 5000001,2024/10/3,-70,865,Amazon,Online shopping at Amazon
