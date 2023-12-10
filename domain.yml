@@ -1,0 +1,62 @@
+version: "3.1"
+
+intents:
+
+  - other
+  - general_info
+  - bank_transfer
+  - confirm_yes
+  - confirm_no
+  - goodbye
+  - greet
+
+
+actions:
+  - action_respond_general_info
+  - action_handle_bank_transfer
+  - action_classify_intent
+  - action_confirm_transfer
+
+slots:
+  predicted_intent:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: custom
+
+  amount:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: amount
+
+  recipient:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: recipient
+entities:
+  - amount
+  - recipient
+
+responses:
+  utter_transfer_cancelled:
+    - text: "Money Transfer has been canceled, what else can I help you with?"
+  utter_goodbye:
+    - text: "See you next time, have a good day!"
+  utter_greet:
+    - custom:
+        blocks:
+          - type: image
+            image_url: "https://www.callcentrehelper.com/images/stories/2020/10/chat-bot-head-set-760.jpg"
+            alt_text: "Image description"
+          - type: section
+            text:
+              type: mrkdwn
+              text: "Hello! I am your banking assistant, how can I assist you today?"
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
