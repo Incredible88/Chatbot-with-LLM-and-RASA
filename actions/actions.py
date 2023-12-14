@@ -3,7 +3,7 @@
 #
 # See this guide on how to implement these action:
 # https://rasa.com/docs/rasa/custom-actions
-import os
+import os,asyncio
 from langchain.chains import ConversationalRetrievalChain
 from langchain.chat_models import ChatOpenAI
 import actions.ActionsGeneralInfo as ActionsGeneralInfo
@@ -29,10 +29,11 @@ class ActionClassifyIntent(Action):
 
         message_text = tracker.latest_message.get('text')
         print(message_text)
-        prompt = f"Classify the following user message into one of two intents - 'general_info' or 'bank_transfer': '{message_text}'. Which intent does it belong to? You should only return the intent name"
+        prompt = f"Classify the following user message into one of two intents - 'general_info' or 'bank_transfer': '{message_text}'. If you think it belongs to 'bank_transfer', it should have the recipient and amount, good example is 'transfer [200](amount) to [Anna](recipient)', Which intent does it belong to? You should only return the intent name"
         # openai_api_key= "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"
         response = openai.chat.completions.create(
-            model="gpt-4",
+            model="gpt-3.5-turbo",
+            # model="gpt-4",
             messages=[
                 {
                     "role": "user",
@@ -58,7 +59,7 @@ class ActionRespondGeneralInfo(Action):
     def name(self) -> Text:
         return "action_respond_general_info"
 
-    def run(self, dispatcher: CollectingDispatcher,
+    async def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
@@ -85,7 +86,8 @@ class ActionRespondGeneralInfo(Action):
         prompt.append({'user': f"{user_message}\n assistant:"})
         if ActionsGeneralInfo.is_question_relevant(user_message,ActionsGeneralInfo.keywords,ActionsGeneralInfo.common_greetings):
             # Get the assistant's response
-            retriever, memory = ActionsGeneralInfo.qaRetrival()
+            memory = ActionsGeneralInfo.Qaparameter.memory
+            retriever = ActionsGeneralInfo.Qaparameter.retriever
             qa = ConversationalRetrievalChain.from_llm(
                 llm,
                 retriever=retriever,
@@ -128,7 +130,7 @@ class ActionHandleBankTransfer(Action):
     def name(self) -> Text:
         return "action_handle_bank_transfer"
 
-    def run(self, dispatcher: CollectingDispatcher,
+    async def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
@@ -177,7 +179,9 @@ class ActionHandleBankTransfer(Action):
 
             # Commit the changes
             connection.commit()
-
+            loop = asyncio.get_event_loop()
+            await loop.run_in_executor(None, ActionsGeneralInfo.Qaparameter().qaRetrival)
+            await asyncio.sleep(5)
             dispatcher.utter_message(text="Money transfer succeeded! Your new account balance is "+ str(new_balance)+", Is there anything else I can assist you with?" )
 
         except mysql.connector.Error as err:

@@ -1,25 +1,36 @@
+
 import json
 import os
+import motor.motor_asyncio
+import asyncio
+import aiomysql
+from bson import json_util
 import re
 import PyPDF2
 import numpy as np
 import pandas as pd
 import sqlalchemy
+from pymongo import MongoClient
 from langchain.embeddings.openai import OpenAIEmbeddings
 from sklearn.feature_extraction.text import TfidfVectorizer
 import openai
 from langchain.memory import ConversationSummaryMemory
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.vectorstores import DocArrayInMemorySearch
-from langchain.chains import  ConversationalRetrievalChain
 from langchain.chat_models import ChatOpenAI
 from langchain.document_loaders import PyPDFLoader, JSONLoader, CSVLoader
 from langchain.docstore.document import Document
+from langchain.document_loaders.mongodb import MongodbLoader
 
 # Set API Key
 os.environ['OPENAI_API_KEY'] = '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'
 openai.api_key = os.getenv("OPENAI_API_KEY")
 llm = ChatOpenAI(model='gpt-4',temperature = 0.1)
+
+# script_dir = os.path.dirname(__file__)
+# file_path_j = os.path.join(script_dir, '..', 'data', 'client_data.json')
+# file_path_d = os.path.join(script_dir, '..', 'data', 'data.pdf')
+# file_path_t = os.path.join(script_dir, '..', 'data', 'Transactions.csv')
 
 dialogues = [
     {"messages": [
@@ -110,6 +121,7 @@ def extract_text_from_pdf(pdf_path):
             text += page.extract_text()
 
     return text
+
 def extract_text_from_json_recursive(data, indent=""):
     text = ""
 
@@ -130,6 +142,7 @@ def extract_text_from_json_recursive(data, indent=""):
         text += f"{indent}{data}\n"
 
     return text
+
 def extract_keywords_tfidf(docs, max_features=50):
 
     if len(docs) == 1:
@@ -163,13 +176,16 @@ def create_documents_from_json(data, parent_key=''):
 
     if isinstance(data, dict):
         for key, value in data.items():
+            # Skip the "_id" key at the top level
+            if key == '_id':
+                continue
+
             nested_key = f'{parent_key}.{key}' if parent_key else key
             documents.extend(create_documents_from_json(value, nested_key))
     elif isinstance(data, list):
         for item in data:
             documents.extend(create_documents_from_json(item, parent_key))
     else:
-        # Combine key and value into page_content
         content = f"{parent_key}: {json.dumps(data)}" if parent_key else json.dumps(data)
         document = Document(page_content=content, metadata={"key": parent_key})
         documents.append(document)
@@ -188,55 +204,98 @@ def create_documents_from_dataframe(df, source_path):
     return documents
 
 
-script_dir = os.path.dirname(__file__)
-# file_path_d = os.path.join(script_dir, '..', 'data', 'data.pdf')
-# file_path_t = os.path.join(script_dir, '..', 'data', 'Transactions.csv')
-file_path_j = os.path.join(script_dir, '..', 'data', 'client_data.json')
+# async def load_mongodb_data_async(connection_string, db_name, collection_name):
+
+#     loader = MongodbLoader(connection_string, db_name, collection_name)
+
+#     loop = asyncio.get_event_loop()
+#     bank_info = await loop.run_in_executor(None, loader.load)
+#
+#     return bank_info
+
+# async def load_from_mysql():
+#     connection_params = {
+#         'host': 'localhost',
+#         'port': 3306,
+#         'user': 'root',
+#         'password': 'Czw200513',
+#         'db': 'banking_chatbot',
+#     }
+#
+#     async with aiomysql.create_pool(**connection_params) as pool:
+#         async with pool.acquire() as conn:
+#             async with conn.cursor(aiomysql.DictCursor) as cur:
+#                 await cur.execute("SELECT * FROM transactions")
+#                 records = await cur.fetchall()
+#                 return pd.DataFrame(records)
+
 
 
 # load pdf file
 # loader = PyPDFLoader(file_path_d)
 # document = loader.load()
 # documents.extend(document)
-def qaRetrival():
-    documents = []
-    # Load JSON documents
-    with open(file_path_j, 'r') as json_file:
-        json_data = json.load(json_file)
-    json_document = create_documents_from_json(json_data)
-    documents.extend(json_document)
 
-    # load MySQL
-    engine = sqlalchemy.create_engine("mysql://root:Czw200513@localhost:3306/banking_chatbot")
-    sql_query = "SELECT * FROM transactions"
-    df_sql = pd.read_sql_query(sql_query, engine)
+# Load JSON documents
+# with open(file_path_j, 'r') as json_file:
+#     json_data = json.load(json_file)
+# json_document = create_documents_from_json(json_data)
+# documents.extend(json_document)
 
-    sql_documents = create_documents_from_dataframe(df_sql,"transactions")
-    documents.extend(sql_documents)
+# csv_loader = CSVLoader(file_path_t)
+# csv_document = csv_loader.load()
+# documents.extend(csv_document)
+class Qaparameter:
 
-    # csv_loader = CSVLoader(file_path_t)
-    # csv_document = csv_loader.load()
-    # documents.extend(csv_document)
+    retriever = None
+    memory = None
+    @classmethod
+    def initialize(cls):
+        cls.retriever, cls.memory = cls().qaRetrival()
+    @classmethod
+    def qaRetrival(self):
+        documents = []
 
-    # Text splitter
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=200, chunk_overlap=5)
-    docs = text_splitter.split_documents(documents)
+        # load mongoDB
+        connection_string = "mongodb://localhost:27017/"
+        db_name = "HSG"
+        collection_name = "bank_info"
+        client = MongoClient(connection_string)
+        db = client[db_name]
+        collection = db[collection_name]
+        documentdb = list(collection.find())
+        json_data = json.dumps(documentdb, default=json_util.default)
+        dict_data = json.loads(json_data, object_hook=json_util.object_hook)[0]
+        json_document = create_documents_from_json(dict_data)
+        documents.extend(json_document)
 
-    # define embedding
-    embeddings = OpenAIEmbeddings()
-    db = DocArrayInMemorySearch.from_documents(docs, embeddings)
+        # load MySQL
+        engine = sqlalchemy.create_engine("mysql://root:Czw200513@localhost:3306/banking_chatbot")
+        sql_query = "SELECT * FROM transactions"
+        df_sql = pd.read_sql_query(sql_query, engine)
+        sql_documents = create_documents_from_dataframe(df_sql,"transactions")
+        documents.extend(sql_documents)
 
-    # define retriever
-    retriever = db.as_retriever(search_type="similarity", search_kwargs={"k": 5})
-    memory = ConversationSummaryMemory(llm=llm,memory_key="chat_history",return_messages=True)
+        # Text splitter
+        text_splitter = RecursiveCharacterTextSplitter(chunk_size=200, chunk_overlap=5)
+        docs = text_splitter.split_documents(documents)
 
-    return retriever, memory
+        # define embedding
+        embeddings = OpenAIEmbeddings()
+        db = DocArrayInMemorySearch.from_documents(docs, embeddings)
+
+        # define retriever
+        retriever = db.as_retriever(search_type="similarity", search_kwargs={"k": 5})
+        memory = ConversationSummaryMemory(llm=llm,memory_key="chat_history",return_messages=True)
+        Qaparameter.memory = memory
+        Qaparameter.retriever = retriever
+
+        return retriever, memory
     # Define QA LLM model
-
 
 # Keywords classification
 
-# Extract keywords From database
+# Extract keywords From MySQL
 engine = sqlalchemy.create_engine("mysql://root:Czw200513@localhost:3306/banking_chatbot")
 sql_query = "SELECT * FROM transactions"
 df_sql = pd.read_sql_query(sql_query, engine)
@@ -254,15 +313,17 @@ feature_names = list(tfidf_vectorizer.vocabulary_.keys())
 # Filter out keywords with digits
 refined_keywords_db = [word for word in feature_names if not re.search(r'\d', word)]
 
-# Extract keywords From json
-with open(file_path_j, 'r') as json_file:
-    json_data = json.load(json_file)
-json_document = create_documents_from_json(json_data)
-json_text = extract_text_from_json_recursive(json_data)
+# Extract keywords From MongoDB
+client = MongoClient('localhost', 27017)
+db = client['HSG']
+collection = db['bank_info']
+documents = list(collection.find({}))
+documents_dict = {str(doc['_id']): doc for doc in documents}
+json_text = extract_text_from_json_recursive(documents_dict)
 docs_json = [json_text]
 keywords_json = extract_keywords_tfidf(docs_json)
 
-# Merge the keywords from the database and json
+# Merge the keywords from the MySQL and MongoDB
 keywords = set(refined_keywords_db).union(keywords_json)
 
 common_greetings = set(["hi", "hello", "thank you", "thanks", "goodbye", "bye", "Yes", "No", "OK", "Sure","Transaction","Transactions"])
@@ -275,3 +336,4 @@ def is_question_relevant(question: str, keywords: set, common_phrases: set) -> b
     # Check if the question contains any of the relevant words
     return any(word.lower() in question.lower() for word in all_relevant_words)
 
+Qaparameter.initialize()
