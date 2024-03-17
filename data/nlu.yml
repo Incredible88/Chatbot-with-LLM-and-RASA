@@ -67,3 +67,13 @@ nlu:
       - goodmorning
       - goodevening
       - good afternoon
+
+  - intent: whatdo
+    examples: |
+      - what can you do for me
+      - what can you do
+      - what can u do
+      - what things can you do
+      - what else can you do
+
+

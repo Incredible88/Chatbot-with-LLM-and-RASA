@@ -17,9 +17,9 @@ from datetime import datetime
 import mysql.connector
 
 # Set API Key
-os.environ['OPENAI_API_KEY'] = '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'
+os.environ['OPENAI_API_KEY'] = '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'
 openai.api_key = os.getenv("OPENAI_API_KEY")
-llm = ChatOpenAI(model='gpt-4',temperature = 0.1)
+llm = ChatOpenAI(model='gpt-3.5-turbo',temperature = 0.1)
 
 class ActionClassifyIntent(Action):
     def name(self) -> Text:
@@ -131,12 +131,17 @@ class ActionHandleBankTransfer(Action):
         return "action_handle_bank_transfer"
 
     async def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+                  tracker: Tracker,
+                  domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         # Get the slot values for the amount and recipient
         amount = float(tracker.get_slot("amount"))
         recipient = tracker.get_slot("recipient")
+
+        # Check if the amount is a positive number
+        if amount <= 0:
+            dispatcher.utter_message(text="Transfer failed: The amount must be a positive number.")
+            return []
 
         # Database connection parameters
         config = {
@@ -149,8 +154,14 @@ class ActionHandleBankTransfer(Action):
         # Connect to the database
         connection = mysql.connector.connect(**config)
         cursor = connection.cursor()
-
         try:
+            # Check if the sender has enough balance
+            cursor.execute("SELECT AccountBalance FROM Accounts WHERE AccountName = 'Bob'")
+            current_balance = cursor.fetchone()[0]
+
+            if amount > current_balance:
+                dispatcher.utter_message(text="Transfer failed: Insufficient funds.")
+                return []
             # Update sender's account balance (Bob)
             cursor.execute(
                 "UPDATE Accounts SET AccountBalance = AccountBalance - %s WHERE AccountName = 'Bob'",

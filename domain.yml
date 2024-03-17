@@ -9,6 +9,7 @@ intents:
   - confirm_no
   - goodbye
   - greet
+  - whatdo
 
 
 actions:
@@ -46,6 +47,10 @@ responses:
     - text: "Money Transfer has been canceled, what else can I help you with?"
   utter_goodbye:
     - text: "See you next time, have a good day!"
+  utter_whatdo:
+    - text: "You can ask me about the basic info of your bank account(account number, transaction records etc.)
+             You can let me help you with money transfer (send 100 to Alice)
+             more functions in the future..."
   utter_greet:
     - custom:
         blocks:

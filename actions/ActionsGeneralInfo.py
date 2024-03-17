@@ -23,9 +23,9 @@ from langchain.docstore.document import Document
 from langchain.document_loaders.mongodb import MongodbLoader
 
 # Set API Key
-os.environ['OPENAI_API_KEY'] = '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'
+os.environ['OPENAI_API_KEY'] = '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'
 openai.api_key = os.getenv("OPENAI_API_KEY")
-llm = ChatOpenAI(model='gpt-4',temperature = 0.1)
+llm = ChatOpenAI(model='gpt-3.5-turbo',temperature = 0.1)
 
 # script_dir = os.path.dirname(__file__)
 # file_path_j = os.path.join(script_dir, '..', 'data', 'client_data.json')

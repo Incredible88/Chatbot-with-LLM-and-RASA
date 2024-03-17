@@ -26,3 +26,8 @@ rules:
       - intent: greet
       - action: utter_greet
 
+  - rule: Whatcando
+    steps:
+      - intent: whatdo
+      - action: utter_whatdo
+
