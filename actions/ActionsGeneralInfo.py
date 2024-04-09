@@ -17,7 +17,7 @@ from langchain.document_loaders import PyPDFLoader, JSONLoader, CSVLoader
 from langchain.docstore.document import Document
 
 # Set API Key
-os.environ['OPENAI_API_KEY'] = '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'
+os.environ['OPENAI_API_KEY'] = 'YOUR-KEY'
 openai.api_key = os.getenv("OPENAI_API_KEY")
 llm = ChatOpenAI(model='gpt-4',temperature = 0.1)
 
