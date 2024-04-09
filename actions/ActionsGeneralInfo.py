@@ -207,7 +207,7 @@ def qaRetrival():
     documents.extend(json_document)
 
     # load MySQL
-    engine = sqlalchemy.create_engine("mysql://root:Czw200513@localhost:3306/banking_chatbot")
+    engine = sqlalchemy.create_engine("YOUR-MYSQL")
     sql_query = "SELECT * FROM transactions"
     df_sql = pd.read_sql_query(sql_query, engine)
 
@@ -237,7 +237,7 @@ def qaRetrival():
 # Keywords classification
 
 # Extract keywords From database
-engine = sqlalchemy.create_engine("mysql://root:Czw200513@localhost:3306/banking_chatbot")
+engine = sqlalchemy.create_engine("YOUR-MYSQL")
 sql_query = "SELECT * FROM transactions"
 df_sql = pd.read_sql_query(sql_query, engine)
 text_column = df_sql.apply(lambda x: ' '.join(x.dropna().astype(str)), axis=1)
