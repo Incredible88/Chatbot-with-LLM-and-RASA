@@ -30,7 +30,7 @@ class ActionClassifyIntent(Action):
         message_text = tracker.latest_message.get('text')
         print(message_text)
         prompt = f"Classify the following user message into one of two intents - 'general_info' or 'bank_transfer': '{message_text}'. Which intent does it belong to? You should only return the intent name"
-        # openai_api_key= "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"
+
         response = openai.chat.completions.create(
             model="gpt-4",
             messages=[
